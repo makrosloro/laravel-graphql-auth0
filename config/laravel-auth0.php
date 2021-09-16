@@ -1,100 +1,79 @@
 <?php
 
-declare(strict_types=1);
-
-return [
-    /*
-    |--------------------------------------------------------------------------
-    | Your auth0 domain
-    |--------------------------------------------------------------------------
-    | As set in the auth0 administration page
-    |--------------------------------------------------------------------------
-    */
-    'domain' => env( 'AUTH0_DOMAIN' ),
+return array(
 
     /*
     |--------------------------------------------------------------------------
-    | Your APP id
+    |   Your auth0 domain
     |--------------------------------------------------------------------------
-    | As set in the auth0 administration page
-    |--------------------------------------------------------------------------
+    |   As set in the auth0 administration page
+    |
     */
-    'client_id' => env( 'AUTH0_CLIENT_ID' ),
+
+    'domain'        => getenv('AUTH0_DOMAIN'),
+    /*
+    |--------------------------------------------------------------------------
+    |   Your APP id
+    |--------------------------------------------------------------------------
+    |   As set in the auth0 administration page
+    |
+    */
+
+    'client_id'     => getenv('AUTH0_CLIENT_ID'),
 
     /*
     |--------------------------------------------------------------------------
-    | Your APP secret
+    |   Your APP secret
     |--------------------------------------------------------------------------
-    | As set in the auth0 administration page
-    |--------------------------------------------------------------------------
+    |   As set in the auth0 administration page
+    |
     */
-    'client_secret' => env( 'AUTH0_CLIENT_SECRET' ),
+    'client_secret' => getenv('AUTH0_CLIENT_SECRET'),
+
+
+    /*
+     |--------------------------------------------------------------------------
+     |   The redirect URI
+     |--------------------------------------------------------------------------
+     |   Should be the same that the one configure in the route to handle the
+     |   'Auth0\Login\Auth0Controller@callback'
+     |
+     */
+
+    'redirect_uri'  => getenv('AUTH0_CALLBACK_URL'),
 
     /*
     |--------------------------------------------------------------------------
-    | The redirect URI
+    |   Persistence Configuration
     |--------------------------------------------------------------------------
-    | Should be the same that the one configure in the route to handle the
-    | 'Auth0\Login\Auth0Controller@callback'
-    |--------------------------------------------------------------------------
+    |   persist_user            (Boolean) Optional. Indicates if you want to persist the user info, default true
+    |   persist_access_token    (Boolean) Optional. Indicates if you want to persist the access token, default false
+    |   persist_id_token        (Boolean) Optional. Indicates if you want to persist the id token, default false
+    |
     */
-    'redirect_uri' => env( 'APP_URL' ).'/auth0/callback',
+
+    // 'persist_user' => true,
+    // 'persist_access_token' => false,
+    // 'persist_id_token' => false,
 
     /*
     |--------------------------------------------------------------------------
-    | Persistence Configuration
+    |   The authorized token issuers
     |--------------------------------------------------------------------------
-    | persist_user          (Boolean) Optional. Indicates if you want to persist the user info, default true
-    | persist_access_token  (Boolean) Optional. Indicates if you want to persist the access token, default false
-    | persist_refresh_token (Boolean) Optional. Indicates if you want to persist the refresh token, default false
-    | persist_id_token      (Boolean) Optional. Indicates if you want to persist the id token, default false
-    |--------------------------------------------------------------------------
+    |   This is used to verify the decoded tokens when using RS256
+    |
     */
-    'persist_user' => true,
-    'persist_access_token' => false,
-    'persist_refresh_token' => false,
-    'persist_id_token' => false,
+    'authorized_issuers'  => [ 'https://'.getenv('AUTH0_DOMAIN').'/' ],
 
     /*
     |--------------------------------------------------------------------------
-    | The authorized token audiences
+    |   The api identifier
     |--------------------------------------------------------------------------
+    |   This is used to verify the decoded tokens when using RS256
+    |
     */
-    // 'api_identifier' => '',
+    'api_identifier'  => getenv('API_IDENTIFIER'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Auth0 Organizations
-    |--------------------------------------------------------------------------
-    | organization (string) Optional. Id of an Organization, if being used. Used when generating log in urls and validating token claims.
-    |--------------------------------------------------------------------------
-    */
-    // 'organization' => '',
+    'supported_algs' => ['RS256']
 
-    /*
-    |--------------------------------------------------------------------------
-    | The secret format
-    |--------------------------------------------------------------------------
-    | Used to know if it should decode the secret when using HS256
-    |--------------------------------------------------------------------------
-    */
-    'secret_base64_encoded' => false,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Supported algorithms
-    |--------------------------------------------------------------------------
-    | Token decoding algorithms supported by your API
-    |--------------------------------------------------------------------------
-    */
-    'supported_algs' => [ 'RS256' ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Guzzle Options
-    |--------------------------------------------------------------------------
-    | guzzle_options (array) optional. Used to specify additional connection options e.g. proxy settings
-    |--------------------------------------------------------------------------
-    */
-    // 'guzzle_options' => []
-];
+);
