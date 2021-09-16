@@ -106,7 +106,8 @@ return [
             'query' => [
                 'wine' => App\GraphQL\Queries\WineQuery::class,
                 'wines' => App\GraphQL\Queries\WinesQuery::class,
-            ]
+            ],
+            'middleware' => 'jwt'
         ],
     ],
 
